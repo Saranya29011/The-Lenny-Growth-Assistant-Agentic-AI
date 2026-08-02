@@ -1,138 +1,65 @@
-# Product Requirements Document
+Product Requirements Document
+Product Name
 
-## Product Name
+## Lenny Growth Assistant
 
-Lenny Growth Assistant
+Problem Statement
 
----
+Users consume large amounts of podcast and transcript content.
 
-## Problem Statement
+Finding specific insights manually is time consuming.
 
-Users often struggle to find actionable insights from lengthy podcast transcripts.
+The application allows users to ask questions directly against Lenny's transcript knowledge base.
 
-Searching manually is time-consuming and inefficient.
+Goals
+Primary Goals
+Conversational transcript search
+Session persistence
+RAG retrieval
+Long-form content generation
+HTML artifact generation
+User Stories
+Story 1
 
-An AI-powered assistant can help users retrieve information instantly and generate useful content.
+As a user
 
----
+I want to ask questions about Lenny's content
 
-## Objective
+So that I can get quick answers.
 
-Build an AI assistant that enables users to:
+Story 2
 
-- Search transcript knowledge
-- Ask contextual questions
-- Generate summaries
-- Create Ship30 essays
-- Generate HTML artifacts
+As a user
 
----
+I want essays generated
 
-## Target Users
+So that I can create content quickly.
 
-### Primary Users
+Story 3
 
-- Product Managers
-- Startup Founders
-- Growth Marketers
-- Content Creators
+As a user
 
-### Secondary Users
+I want HTML artifacts
 
-- Students
-- Researchers
-- Business Analysts
+So that I can prototype ideas rapidly.
 
----
-
-## Functional Requirements
-
-### Session Management
-
-Users should be able to:
-
-- Create chat sessions
-- Delete sessions
-- View session history
-
----
-
-### Chat System
-
-Users should be able to:
-
-- Ask questions
-- Continue conversations
-- Receive contextual answers
-
----
-
-### RAG Retrieval
-
-System should:
-
-- Retrieve relevant transcript chunks
-- Provide context to LLM
-- Improve answer accuracy
-
----
-
-### Content Generation
-
-System should support:
-
-- Summaries
-- Essays
-- Blogs
-- LinkedIn Posts
-
----
-
-### Artifact Generation
-
-System should generate:
-
-- Landing Pages
-- Dashboards
-- HTML Components
-
----
-
-## Non Functional Requirements
-
-### Performance
-
-- Response time < 5 seconds
-
-### Reliability
-
-- 99% uptime
-
-### Scalability
-
-- Support multiple concurrent users
-
-### Security
-
-- Secure API keys
-- Protected database access
-
----
-
-## Success Metrics
-
-- Response Accuracy
-- User Satisfaction
-- Retrieval Quality
-- Session Retention
-- Artifact Generation Success Rate
-
----
-
-## Future Scope
-
-- Autonomous Agents
-- Voice Assistant
-- Multi-document RAG
-- Knowledge Graph Integration
-- Advanced Analytics
+Functional Requirements
+Session Management
+Create session
+View session
+Delete session
+Chat
+Ask questions
+Retrieve context
+Generate answers
+Artifact Generation
+Generate HTML
+Display in viewer
+LLM Switching
+Gemini
+Ollama
+Success Metrics
+Response generated successfully
+Session saved successfully
+Artifact rendered successfully
+LLM switch works correctly
