@@ -54,15 +54,16 @@ frontend/
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
-## Frontend
+## Environment Variables
+LLM_PROVIDER=gemini
+
+OLLAMA_MODEL=qwen2.5:3b
+
+GEMINI_API_KEY=<YOUR_GEMINI_API_KEY>
+SUPABASE_URL=<YOUR_SUPABASE_URL>
+SUPABASE_KEY=<YOUR_SUPABASE_KEY>
+### Frontend
+``` bash
 npm install
 npm run dev
-
-## Environment Variables
-SUPABASE_URL=<
-SUPABASE_KEY=
-
-GEMINI_API_KEY=
-
-LLM_PROVIDER=gemini
-OLLAMA_MODEL=qwen2.5:3b
+```
