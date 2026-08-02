@@ -26,3 +26,24 @@ def get_sessions():
     )
 
     return result.data
+@router.delete("/sessions/{session_id}")
+def delete_session(session_id: str):
+
+    supabase.table(
+        "messages"
+    ).delete().eq(
+        "session_id",
+        session_id
+    ).execute()
+
+    supabase.table(
+        "sessions"
+    ).delete().eq(
+        "id",
+        session_id
+    ).execute()
+
+    return {
+        "message":
+        "Session deleted"
+    }
