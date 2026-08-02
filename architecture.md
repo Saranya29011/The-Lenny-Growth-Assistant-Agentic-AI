@@ -1,290 +1,252 @@
 # Architecture Document
 
-## Lenny Growth Assistant
-
----
-
-# System Overview
-
-Lenny Growth Assistant is a Retrieval-Augmented Generation (RAG) application designed to help users interact with Lenny Rachitsky's podcast transcripts through an AI-powered chat interface.
-
-The system retrieves relevant transcript context from a knowledge base and combines it with a Large Language Model (LLM) to generate accurate and contextual responses.
-
----
-
-# High-Level Architecture
+## System Architecture
 
 ```text
-+------------------+
-|   React Frontend |
-+---------+--------+
-          |
-          | REST API
-          v
-+------------------+
-| FastAPI Backend  |
-+---------+--------+
-          |
-          |
-          +----------------+
-          |                |
-          v                v
-+----------------+   +----------------+
-| RAG Retriever  |   |    Supabase    |
-| (Embeddings)   |   | Sessions & Msg |
-+--------+-------+   +----------------+
-         |
-         v
-+----------------+
-| Transcript DB  |
-| / Vector Store |
-+--------+-------+
-         |
-         v
-+----------------+
-| Gemini/Ollama  |
-|      LLM       |
-+----------------+
+                    +--------------------+
+                    |   React Frontend   |
+                    +--------------------+
+                              |
+                              |
+                              v
+                    +--------------------+
+                    |   FastAPI Backend  |
+                    +--------------------+
+                              |
+        -----------------------------------------
+        |                    |                  |
+        v                    v                  v
++---------------+   +---------------+   +---------------+
+| Sessions API  |   | Messages API  |   |  Chat API     |
++---------------+   +---------------+   +---------------+
+                                              |
+                                              v
+                                    +------------------+
+                                    | RAG Retriever    |
+                                    +------------------+
+                                              |
+                                              v
+                                    +------------------+
+                                    | Transcript Data  |
+                                    +------------------+
+                                              |
+                                              v
+                                    +------------------+
+                                    | Gemini / Ollama  |
+                                    +------------------+
+                                              |
+                                              v
+                                    +------------------+
+                                    |    Supabase      |
+                                    +------------------+
 ```
 
 ---
 
-# Architecture Layers
+# Database Schema
 
-## 1. Presentation Layer
+## sessions
 
-### Technology
-- React
-- Vite
-- Axios
-
-### Responsibilities
-
-- User Interface
-- Chat Experience
-- Session Navigation
-- Artifact Viewer
-- Message Input Handling
-
-### Components
-
-- App.jsx
-- Sidebar.jsx
-- ChatWindow.jsx
-- MessageInput.jsx
-- ArtifactViewer.jsx
-
----
-
-## 2. API Layer
-
-### Technology
-- FastAPI
-
-### Responsibilities
-
-- Handle User Requests
-- Manage Sessions
-- Store Messages
-- Retrieve Context
-- Communicate with LLM
-
-### Main Endpoints
-
-| Endpoint | Method | Purpose |
-|-----------|----------|----------|
-| / | GET | Health Check |
-| /chat | POST | Generate Response |
-| /sessions | GET | Fetch Sessions |
-| /sessions | POST | Create Session |
-| /sessions/{id} | DELETE | Delete Session |
-| /messages/{id} | GET | Load Messages |
-
----
-
-## 3. Retrieval Layer (RAG)
-
-### Responsibilities
-
-- Convert Query to Embeddings
-- Search Relevant Transcript Chunks
-- Retrieve Context for LLM
-
-### Modules
-
-```text
-rag/
-├── embedder.py
-├── retriever.py
-└── ingest.py
-```
-
-### Workflow
-
-1. User sends question
-2. Query converted into embeddings
-3. Similar transcript chunks retrieved
-4. Context sent to LLM
-
----
-
-## 4. LLM Layer
-
-### Supported Models
-
-#### Gemini
-
-- Gemini 2.5 Flash
-- Cloud-based inference
-
-#### Ollama
-
-- Qwen
-- Llama
-- Mistral
-- Local inference
-
-### Responsibilities
-
-- Answer Questions
-- Generate Summaries
-- Create Ship30 Essays
-- Generate HTML Artifacts
-
----
-
-## 5. Database Layer
-
-### Technology
-
-Supabase
-
-### Tables
-
-#### sessions
-
-| Field | Type |
-|---------|--------|
+| Column | Type |
+|----------|----------|
 | id | UUID |
 | title | TEXT |
 | created_at | TIMESTAMP |
 
-#### messages
+---
 
-| Field | Type |
-|---------|--------|
+## messages
+
+| Column | Type |
+|----------|----------|
 | id | UUID |
 | session_id | UUID |
 | role | TEXT |
 | content | TEXT |
 | created_at | TIMESTAMP |
 
-### Responsibilities
+---
 
-- Store Chat Sessions
-- Store Messages
-- Maintain Conversation History
+# API Endpoints
+
+## Session APIs
+
+| Method | Endpoint | Description |
+|----------|----------|-------------|
+| GET | /sessions | Get all sessions |
+| POST | /sessions | Create new session |
+| DELETE | /sessions/{id} | Delete session |
 
 ---
 
-# Request Flow
+## Message APIs
 
-## Normal Question Answering
+| Method | Endpoint | Description |
+|----------|----------|-------------|
+| GET | /messages/{session_id} | Get chat history |
+
+---
+
+## Chat API
+
+| Method | Endpoint | Description |
+|----------|----------|-------------|
+| POST | /chat | Main AI endpoint |
+
+---
+
+# Agentic Routing Logic
+
+The application routes requests based on user intent.
+
+```text
+User Query
+     |
+     v
+Intent Detection
+     |
+----------------------------------
+|              |                |
+Normal Chat   Ship30 Mode   Artifact Mode
+```
+
+---
+
+## Normal Chat Flow
 
 ```text
 User Question
       |
       v
-React Frontend
+Retrieve Context
       |
       v
-FastAPI Backend
-      |
-      v
-RAG Retriever
-      |
-      v
-Transcript Context
+Prompt Creation
       |
       v
 Gemini / Ollama
       |
       v
-Generated Response
-      |
-      v
-Supabase Storage
-      |
-      v
-Frontend Display
+Response
 ```
 
 ---
 
-## Artifact Generation Flow
+## Ship30 Essay Flow
 
 ```text
-User Request
-(Create Dashboard / Website)
-          |
-          v
-FastAPI Backend
-          |
-          v
-Prompt Builder
-          |
-          v
-Gemini / Ollama
-          |
-          v
+Essay Request
+      |
+      v
+Transcript Retrieval
+      |
+      v
+Essay Prompt
+      |
+      v
+LLM
+      |
+      v
+Long-form Essay
+```
+
+---
+
+## Artifact Flow
+
+```text
+HTML Request
+      |
+      v
+Retrieve Context
+      |
+      v
+Frontend Prompt
+      |
+      v
+LLM
+      |
+      v
 HTML Artifact
-          |
-          v
+      |
+      v
 Artifact Viewer
 ```
 
 ---
 
-# Folder Structure
+# LLM Toggle System
+
+The application supports multiple LLM providers.
+
+Configuration:
+
+```env
+LLM_PROVIDER=gemini
+```
+
+or
+
+```env
+LLM_PROVIDER=ollama
+```
+
+Routing Logic:
 
 ```text
-project-root/
-│
-├── backend/
-│   ├── main.py
-│   ├── config.py
-│   ├── rag/
-│   ├── routers/
-│   ├── services/
-│   └── requirements.txt
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── services/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   │
-│   └── package.json
-│
-├── README.md
-├── architecture.md
-├── design.md
-└── PRD.md
+Incoming Request
+       |
+       v
+Check LLM_PROVIDER
+       |
+ --------------------
+ |                  |
+Gemini          Ollama
+ |                  |
+ v                  v
+Response        Response
 ```
 
 ---
 
-# Key Features
+# Artifact Viewer Architecture
 
-- Retrieval-Augmented Generation (RAG)
-- Multi-Session Chat
-- Context-Aware Conversations
-- Ship30 Content Generation
-- HTML Artifact Generation
-- Gemini Integration
-- Ollama Integration
-- Supabase Persistence
+```text
+Generated HTML
+       |
+       v
+Backend Response
+       |
+       v
+React State
+       |
+       v
+ArtifactViewer Component
+       |
+       v
+iframe srcDoc
+       |
+       v
+Rendered Artifact
+```
 
 ---
 
+# Security Considerations
+
+- API keys stored in environment variables
+- No secrets committed to repository
+- Supabase handles secure database access
+- CORS enabled for frontend communication
+
+---
+
+# Scalability Considerations
+
+Future enhancements:
+
+- Redis caching
+- Streaming responses
+- Authentication layer
+- Multi-agent orchestration
+- Vector database integration
