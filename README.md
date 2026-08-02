@@ -185,3 +185,15 @@ SUPABASE_KEY=<YOUR_SUPABASE_KEY>
 <img width="1915" height="1023" alt="{0BC6FAA3-6190-4AC4-9996-91187563BC42}" src="https://github.com/user-attachments/assets/bec31654-3bf5-47d2-a1af-4e7da5cc72c3" />
 
 
+## Demo Video
+
+A complete walkthrough of the application including:
+
+- Session Management
+- RAG-based Chat
+- Ship30 Essay Generation
+- Artifact Generation
+
+Video Link:
+
+[https://drive.google.com/your-link-here](https://drive.google.com/file/d/1eO7WgfgEQzeHq0ZrPoTETFmdJCBCp05b/view?usp=drive_link)
