@@ -1,76 +1,159 @@
-# UI/UX Design Document
+# UI / UX Design Document
 
-## Design Goals
+## Design Philosophy
 
-The application is designed to provide a clean and intuitive AI assistant experience similar to ChatGPT and Claude.
+The design focuses on simplicity, familiarity, and productivity.
 
----
-
-## Layout Structure
-
-### Sidebar
-
-Functions:
-
-- Create Session
-- View Sessions
-- Delete Session
-- Session Navigation
+The goal is to create an experience similar to ChatGPT and Claude while supporting artifact generation.
 
 ---
 
-### Chat Area
+# Design Goals
 
-Functions:
+## Simplicity
 
-- Display Messages
-- User Input
-- AI Responses
-- Loading State
+Users should be able to start chatting immediately.
 
----
+## Familiarity
 
-### Artifact Viewer
+The interface follows patterns users already know from modern AI products.
 
-Functions:
+## Efficiency
 
-- Render HTML Artifacts
-- Preview Dashboards
-- Preview Landing Pages
-- Interactive Visual Output
+Actions such as creating sessions and viewing artifacts require minimal effort.
 
 ---
 
-## Color Scheme
+# Layout Structure
 
-Primary:
-- Blue (#2563eb)
-
-Background:
-- White (#ffffff)
-
-Secondary Background:
-- Light Gray (#f9fafb)
-
-Borders:
-- Gray (#e5e7eb)
+```text
+----------------------------------------------------
+| Sidebar | Chat Window | Artifact Viewer          |
+----------------------------------------------------
+```
 
 ---
 
-## User Experience Features
+# Sidebar
 
-- Responsive Layout
-- Smooth Scrolling
-- Session Persistence
-- Real-Time Feedback
-- Artifact Rendering
+Purpose:
+
+- Session navigation
+- Session creation
+- Session deletion
+
+Features:
+
+- New Chat button
+- Session history
+- Active session highlighting
 
 ---
 
-## Future Improvements
+# Chat Window
+
+Purpose:
+
+Display conversation history.
+
+Features:
+
+- User messages
+- Assistant messages
+- Auto scroll
+- Loading indicator
+
+---
+
+# Artifact Viewer
+
+Purpose:
+
+Display generated HTML artifacts separately from chat.
+
+Features:
+
+- Responsive iframe rendering
+- Side-by-side viewing
+- Dynamic resizing
+
+---
+
+# Color Palette
+
+| Element | Color |
+|----------|----------|
+| Primary | #2563eb |
+| Background | #f9fafb |
+| Border | #e5e7eb |
+| Text | #111827 |
+| Secondary Text | #6b7280 |
+
+---
+
+# Typography
+
+Primary Font:
+
+```text
+System UI
+Segoe UI
+Roboto
+Sans-serif
+```
+
+Goals:
+
+- High readability
+- Clean appearance
+- Consistent spacing
+
+---
+
+# UX Decisions
+
+## Session Persistence
+
+Chats remain available across page refreshes.
+
+## Auto Session Naming
+
+First user message becomes session title.
+
+## Artifact Isolation
+
+Generated HTML appears in a dedicated viewer rather than cluttering the conversation.
+
+## Auto Scrolling
+
+Newest messages automatically remain visible.
+
+---
+
+# Responsiveness
+
+Desktop:
+
+```text
+Sidebar + Chat + Artifact
+```
+
+Mobile:
+
+```text
+Sidebar
+Chat
+Artifact
+```
+
+Stacked vertically.
+
+---
+
+# Future Design Enhancements
 
 - Dark Mode
 - Markdown Rendering
-- Voice Chat
-- Streaming Responses
-- Mobile Optimization
+- Streaming Messages
+- Multi-Panel Layouts
+- Resizable Artifact Viewer
