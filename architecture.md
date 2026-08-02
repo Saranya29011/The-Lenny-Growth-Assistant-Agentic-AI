@@ -241,12 +241,3 @@ Rendered Artifact
 
 ---
 
-# Scalability Considerations
-
-Future enhancements:
-
-- Redis caching
-- Streaming responses
-- Authentication layer
-- Multi-agent orchestration
-- Vector database integration
