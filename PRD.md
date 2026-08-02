@@ -3,7 +3,7 @@ Product Name
 
 ## Lenny Growth Assistant
 
-Problem Statement
+## Problem Statement
 
 Users consume large amounts of podcast and transcript content.
 
@@ -11,15 +11,16 @@ Finding specific insights manually is time consuming.
 
 The application allows users to ask questions directly against Lenny's transcript knowledge base.
 
-Goals
-Primary Goals
+### Goals
+---
+## Primary Goals
 Conversational transcript search
 Session persistence
 RAG retrieval
 Long-form content generation
 HTML artifact generation
 User Stories
-Story 1
+## Story 1
 
 As a user
 
@@ -27,7 +28,7 @@ I want to ask questions about Lenny's content
 
 So that I can get quick answers.
 
-Story 2
+## Story 2
 
 As a user
 
@@ -35,20 +36,22 @@ I want essays generated
 
 So that I can create content quickly.
 
-Story 3
+## Story 3
 
 As a user
 
 I want HTML artifacts
 
 So that I can prototype ideas rapidly.
-
-Functional Requirements
-Session Management
+---
+### Functional Requirements
+## Session Management
+``` text
 Create session
 View session
 Delete session
-Chat
+```
+## Chat
 Ask questions
 Retrieve context
 Generate answers
